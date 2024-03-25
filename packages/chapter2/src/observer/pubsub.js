@@ -2,7 +2,7 @@ const publisher = {
   state: null,
   subscribers: new Map(),
   alert(prop) {
-    console.log(this.subscribers);
+    console.log("subscriber", this.subscribers);
     this.subscribers[prop]?.forEach((fn) => {
       fn();
     });
@@ -12,7 +12,6 @@ const publisher = {
 let currentCallback = null;
 export const 구독 = (fn) => {
   currentCallback = fn;
-
   fn();
 };
 
