@@ -1,4 +1,3 @@
-
 export function createHooks(callback) {
   const stateContext = {
     current: 0,
@@ -17,14 +16,26 @@ export function createHooks(callback) {
 
   const useState = (initState) => {
     const { current, states } = stateContext;
+    let rafId;
     stateContext.current += 1;
 
     states[current] = states[current] ?? initState;
 
     const setState = (newState) => {
+      // TODO: 여기가 변경점인듯...
       if (newState === states[current]) return;
+
       states[current] = newState;
-      callback();
+      const _render = () => {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        console.log("c");
+        callback();
+        rafId = requestAnimationFrame(_render);
+      };
+      requestAnimationFrame(_render);
     };
 
     return [states[current], setState];
