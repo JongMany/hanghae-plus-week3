@@ -31,7 +31,6 @@ export function createHooks(callback) {
           cancelAnimationFrame(rafId);
           return;
         }
-        console.log("c");
         callback();
         rafId = requestAnimationFrame(_render);
       };
