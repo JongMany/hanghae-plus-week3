@@ -1,9 +1,8 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test, vi } from "vitest";
 
 import { 구독, 발행기관 } from "../pubsub.js";
 
-test('구독/발행 자동화 테스트', () => {
-
+test("구독/발행 자동화 테스트", () => {
   const 상태 = 발행기관({ a: 10, b: 20 });
 
   const mockFn1 = vi.fn(() => `a = ${상태.a}`);
@@ -32,6 +31,7 @@ test('구독/발행 자동화 테스트', () => {
 
   // 발행기관의 상태가 변경되면 알림을 전송한다.
   상태.a = 100;
+  console.log("state", 상태);
   expect(mockFn1).toBeCalledTimes(2);
   expect(mockFn2).toBeCalledTimes(1); // b는 변경되지 않았기 때문에 알림을 받지 못했음.
   expect(mockFn3).toBeCalledTimes(2);
@@ -54,4 +54,4 @@ test('구독/발행 자동화 테스트', () => {
   expect(mockFn3).toReturnWith(`a + b = 300`);
   expect(mockFn4).toReturnWith(`a * b = 20000`);
   expect(mockFn5).toReturnWith(`a - b = -100`);
-})
+});
